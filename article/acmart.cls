@@ -1450,7 +1450,7 @@
 \def\acmISBN#1{\def\@acmISBN{#1}}
 \acmISBN{978-x-xxxx-xxxx-x/YY/MM}
 \def\acmDOI#1{\def\@acmDOI{#1}}
-\acmDOI{10.1145/nnnnnnn.nnnnnnn}
+\acmDOI{}
 \newif\if@ACM@badge
 \@ACM@badgefalse
 \newlength\@ACM@badge@width
@@ -1645,7 +1645,7 @@
 \def\@copyrightowner{%
   \ifcase\acm@copyrightmode\relax % none
   \or % acmcopyright
-  Association for Computing Machinery.
+  Henoch Mendes Vitureira %Association for Computing Machinery.
   \or % acmlicensed
   Copyright held by the owner/author(s). Publication rights licensed to
   ACM\@.
@@ -1688,11 +1688,11 @@
    that copies are not made or distributed for profit or commercial
    advantage and that copies bear this notice and the full citation on
    the first page. Copyrights for components of this work owned by
-   others than ACM must be honored. Abstracting with credit is
+   others than Henoch Mendes Vitureira must be honored. Abstracting with credit is
    permitted. To copy otherwise, or republish, to post on servers or to
    redistribute to lists, requires prior specific permission
    and\hspace*{.5pt}/or  a fee. Request permissions from
-   permissions@acm.org.
+   201601081@estudantes.ips.pt.
   \or % acmlicensed
    Permission to make digital or hard copies of all or part of this
    work for personal or classroom use is granted without fee provided
@@ -1878,7 +1878,7 @@
       \@copyrightyear.\
     \fi
     \if@ACM@manuscript
-      Manuscript submitted to ACM\\
+      %Manuscript submitted to ACM\\
     \else
       \if@ACM@authorversion
           This is the author's version of the work. It is posted here for
@@ -2605,7 +2605,8 @@
       \fancyhead[RE]{\@shortauthors}%
       \fancyhead[LO]{\ACM@linecountL\shorttitle}%
       \if@ACM@nonacm\else%
-        \fancyfoot[RO,LE]{\footnotesize Manuscript submitted to ACM}
+        \fancyfoot[RO,LE]{\footnotesize %Manuscript submitted to ACM
+        }
       \fi%
     \or % acmsmall
       \fancyhead[LE]{\ACM@linecountL\@headfootfont\@acmArticlePage}%
@@ -2729,7 +2730,8 @@
       \fancyhead[L]{\ACM@linecountL}%
       \fancyfoot[RO,LE]{\if@ACM@printfolios\small\thepage\fi}%
       \if@ACM@nonacm\else%
-        \fancyfoot[RE,LO]{\footnotesize Manuscript submitted to ACM}%
+        \fancyfoot[RE,LO]{\footnotesize %Manuscript submitted to ACM
+        }%
       \fi%
     \or % acmsmall
       \if@ACM@nonacm\else%
@@ -2773,7 +2775,7 @@
     \ifnum\ACM@format@nr=0\relax % Manuscript
     \fancyfoot[LO,RE]{\ACM@timestamp\quad
       \if@ACM@nonacm\else
-        \footnotesize Manuscript submitted to ACM
+        \footnotesize %Manuscript submitted to ACM
       \fi}
     \else
     \fancyfoot[LO,RE]{\ACM@timestamp}
