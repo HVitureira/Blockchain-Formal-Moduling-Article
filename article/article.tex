@@ -77,12 +77,11 @@
 %% The abstract is a short summary of the work to be presented in the
 %% article.
 \begin{abstract}
-  A clear and well-documented \LaTeX\ document is presented as an
-  article formatted for publication by ACM in a conference proceedings
-  or journal publication. Based on the ``acmart'' document class, this
-  article presents and explains many of the common variations, as well
-  as many of the formatting elements an author may use in the
-  preparation of the documentation of their work.
+  Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+  Vestibulum enim nibh, aliquet sit amet ex suscipit, efficitur fringilla enim. 
+  Vestibulum elementum fringilla sodales. Cras malesuada sollicitudin consectetur.
+  Cras elit nibh, tempus elementum dui vitae, sagittis porttitor elit. In sollicitudin purus neque, eu tristique felis varius in. Morbi sed commodo eros.
+  Pellentesque ornare sed felis et bibendum.
 \end{abstract}
 
 %%
@@ -112,16 +111,6 @@
 %% the work being presented. Separate the keywords with commas.
 \keywords{Software Quality, Formal Methods, Blockchain, Smartcontracts}
 
-%% A "teaser" image appears between the author and affiliation
-%% information and the body of the document, and typically spans the
-%% page.
-\begin{teaserfigure}
-  \includegraphics[width=\textwidth]{sampleteaser}
-  \caption{Seattle Mariners at Spring Training, 2010.}
-  \Description{Enjoying the baseball game from the third-base
-    seats. Ichiro Suzuki preparing to bat.}
-  \label{fig:teaser}
-\end{teaserfigure}
 
 %%
 %% This command processes the author and affiliation and title
@@ -129,22 +118,30 @@
 \maketitle
 
 \section{Introduction}
-ACM's consolidated article template, introduced in 2017, provides a
-consistent \LaTeX\ style for use across ACM publications, and
-incorporates accessibility and metadata-extraction functionality
-necessary for future Digital Library endeavors. Numerous ACM and
-SIG-specific \LaTeX\ templates have been examined, and their unique
-features incorporated into this single new template.
+The rising complexity of features offered by software gives us the ability to use it for the most integrity and reliability dependent needs of our lives. 
+Information systems that rely on these base principles can be financial and health related services, and in most recent times, blockchain based applications. 
+Blockchain, being a decentralized and distributed network protocol that can be used as the core of a monetary system that performs peer-to-peer transactions, 
+it needs the assurance of coordination and consensus of its economy’s state~\cite{Duan2018}. 
+Knowing that the protocol of a given blockchain project is what dictates how transactions and their coordination is maintained, the assurance of security and safety is a given. 
+Formal methods can be introduced in order to provide unequivocal evidence that a given blockchain system and its consensus algorithm are secure and in according to expected software quality.
 
-If you are new to publishing with ACM, this document is a valuable
-guide to the process of preparing your work for publication. If you
-have published with ACM before, this document provides insight and
-instruction into more recent changes to the article template.
+Formal methods are a rigorous description of a system or process using mathematics that aims to provide evidence of its reliability and robustness, 
+according the specification in question~\cite{Regan2014}.
 
-The ``\verb|acmart|'' document class can be used to prepare articles
-for any ACM publication --- conference or journal, and for any stage
-of publication, from review to final ``camera-ready'' copy, to the
-author's own version, with {\itshape very} few changes to the source.
+//TODO FINISH
+
+\section{Formal Modeling Application}
+Blockchain systems can be divided into five main layers~\cite{Duan2018}: Blockchain system, Consensus, Smartcontract and Application. 
+As seen on Figure~\ref{fig:blockchain-layers}.
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=\linewidth]{blockchain-layers}
+  \caption{Blockchain infrastructure, from \cite{Duan2018}}
+  \Description{Ilustration of the layers that describe a blockchain system}
+  \label{fig:blockchain-layers}
+\end{figure}
+
 
 \section{Template Overview}
 As noted in the introduction, the ``\verb|acmart|'' document class can
@@ -537,61 +534,6 @@ monograph/whole book in a series (see 2a in spec. document)
 \cite{Liu2019} followed by the same example, however we only output
 the series if the volume number is given.
 
-\section{Acknowledgments}
-
-Identification of funding sources and other support, and thanks to
-individuals and groups that assisted in the research and the
-preparation of the work should be included in an acknowledgment
-section, which is placed just before the reference section in your
-document.
-
-This section has a special environment:
-\begin{verbatim}
-  \begin{acks}
-  ...
-  \end{acks}
-\end{verbatim}
-so that the information contained therein can be more easily collected
-during the article metadata extraction phase, and to ensure
-consistency in the spelling of the section heading.
-
-Authors should not prepare this section as a numbered or unnumbered {\verb|\section|}; please use the ``{\verb|acks|}'' environment.
-
-\section{Appendices}
-
-If your work needs an appendix, add it before the
-``\verb|\end{document}|'' command at the conclusion of your source
-document.
-
-Start the appendix with the ``\verb|appendix|'' command:
-\begin{verbatim}
-  \appendix
-\end{verbatim}
-and note that in the appendix, sections are lettered, not
-numbered. This document has two appendices, demonstrating the section
-and subsection identification method.
-
-\section{SIGCHI Extended Abstracts}
-
-The ``\verb|sigchi-a|'' template style (available only in \LaTeX\ and
-not in Word) produces a landscape-orientation formatted article, with
-a wide left margin. Three environments are available for use with the
-``\verb|sigchi-a|'' template style, and produce formatted output in
-the margin:
-\begin{itemize}
-  \item {\verb|sidebar|}:  Place formatted text in the margin.
-  \item {\verb|marginfigure|}: Place a figure in the margin.
-  \item {\verb|margintable|}: Place a table in the margin.
-\end{itemize}
-
-%%
-%% The acknowledgments section is defined using the "acks" environment
-%% (and NOT an unnumbered section). This ensures the proper
-%% identification of the section in the article metadata, and the
-%% consistent spelling of the heading.
-\begin{acks}
-  To Robert, for the bagels and explaining CMYK and color spaces.
-\end{acks}
 
 %%
 %% The next two lines define the bibliography style to be used, and
