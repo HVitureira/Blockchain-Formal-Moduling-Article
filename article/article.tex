@@ -221,7 +221,48 @@ Blockchain system may choose to use consensus rules taken from popular protocols
 but an alternative rule can be implemented, and also be formally modelled~\cite{Kawahara2020}.
 
 On a consensus rule, fault tolerances requirements are of utmost importance, including the collusion of nodes to alter a ledger.
-In~\cite{Kawahara2020}, the author discusses a way to describe these tolerances with a scalable verification.
+In~\cite{Kawahara2020}, the author discusses a way to formally describe these tolerances with a scalable verification.
+
+Endorsement policies, the rule that define the criteria of agreement os transaction results between nodes, can be described
+as a threshold function as follows:
+
+\begin{displaymath}
+  T(m,\textrm{node}_1,... ,\textrm{node}_n), m \in \mathbb{N}
+\end{displaymath}
+\linebreak[1]
+
+Where $T(2,\textrm{node}_1,\textrm{node}_2,\textrm{node}_3)$ would be an endorsement policy
+that means "among the three nodes in the argument, at least two nodes must return the same execution result".
+With this, we can mathematically model faulty state verification.
+
+\subsection{Faulty states}
+Let $\mathbb{B}$ and $\mathbb{N}$ be sets of Boolean and natural numbers, respectively. The state of the \textit{i}-th node can be defined as:
+$s_i = (s_i.e,s_i.v)$, where for each transaction execution, $s_i.e \in \mathbb{B}$ is the  existence of the result,
+and $s_i.v \in \mathbb{B}$ is the value of the result (correct or wrong).
+
+Using the threshold function previously shown, $T(m,s_1,... ,s_n) = (T.e,T.v)$. With this, let
+
+\begin{displaymath}
+  H_ = \left(\sum_{i}^{n} I(s_i.e \wedge (s_i.v = b)) \geq m \right)
+\end{displaymath}
+
+Where:
+
+\begin{enumerate}
+  \item[$\blacksquare$] \textit{m} is a treshold
+  \item[$\blacksquare$] $b \in \mathbb{B}$
+  \item[$\blacksquare$] $I : \mathbb{B} \mapsto \{0,1\}$  is the indicator function
+\end{enumerate}
+\  \\ %fake break line
+
+With the expression above, the author of~\cite{Kawahara2020} infers:
+
+\begin{displaymath}
+  T.e = H_{true} \vee H_{false},  T.v = \neg{H_{false}}
+\end{displaymath}
+
+The  endorsement policy $EP = (EP.e,EP.v)$ can be formed with \textit{T}. When $EP.e = \textrm{true}$, the policy
+is considered accordingly followed and the involved ledger is updated with the value of $EP.v$.
 
 \section{Template Overview}
 As noted in the introduction, the ``\verb|acmart|'' document class can
