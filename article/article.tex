@@ -62,11 +62,14 @@
 %% The abstract is a short summary of the work to be presented in the
 %% article.
 \begin{abstract}
-  Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-  Vestibulum enim nibh, aliquet sit amet ex suscipit, efficitur fringilla enim. 
-  Vestibulum elementum fringilla sodales. Cras malesuada sollicitudin consectetur.
-  Cras elit nibh, tempus elementum dui vitae, sagittis porttitor elit. In sollicitudin purus neque, eu tristique felis varius in. Morbi sed commodo eros.
-  Pellentesque ornare sed felis et bibendum.
+  Blockchain is a technology that allows the decentralized record keeping and monetary transactions.
+  Its different uses are constantly being explored and new projects emerge on a daily basis.
+  The underlying design of such systems can bring about dire consequences if deployed with an unclear design
+  and possible vulnerabilities. If we use formal methods to mathematically model the base structures of out blockchain
+  system we provide irrefutable proof that our design will work as intended. This includes the usage of modeling languages
+  to describe our system and block, mathematical descriptions of the applied consensus rule and endorsement policy and its different
+  security requirements, including a smart contract that contains the code of an application hosted in a blockchain.
+
 \end{abstract}
 
 %%
@@ -108,7 +111,7 @@ Information systems that rely on these base principles can be financial and heal
 Blockchain, being a decentralized and distributed network protocol that can be used as the core of a monetary system that performs peer-to-peer transactions, 
 it needs the assurance of coordination and consensus of its economy’s state~\cite{Duan2018}. 
 Knowing that the protocol of a given blockchain project is what dictates how transactions and their coordination is maintained, the assurance of security and safety is a given. 
-Formal methods can be introduced in order to provide unequivocal evidence that a given blockchain system and its consensus algorithm are secure and in according to expected software quality.
+Formal methods can be introduced in order to provide unequivocal evidence that a given blockchain system and its consensus algorithm and inherent smart contracts are secure and in according to expected software quality.
 
 Formal methods are a rigorous description of a system or process using mathematics that aims to provide evidence of its reliability and robustness, 
 according the specification in question~\cite{Regan2014}.
@@ -116,11 +119,11 @@ according the specification in question~\cite{Regan2014}.
 Contrasting with normal testing, formal verification is performed during the design process, it ensure the design is correct and allows the verification
 of any situation, while regular testing cannot test for every possible input~\cite{Murray2019}.
 
-This paper is organized as follows. Section \ref{formalModeling} introduces applications of formal modeling of blockchain technology.
-Section \ref{consensusRule} expands on the use of formal mathematical descriptions of a blockchain's consensus rule.
-Section \ref{smartContracts} explored how formal modeling can be used to verify and assure quality to smart contracts using Colored Petri Nets (CPN).
-Section \ref{security} elaborates on the security requirements of a blockchain system.
-Section \ref{conclusion} is a brief conclusion.
+This paper is organized as follows. Section~\ref{formalModeling} introduces applications of formal modeling of blockchain technology.
+Section~\ref{consensusRule} expands on the use of formal mathematical descriptions of a blockchain's consensus rule.
+Section~\ref{smartContracts} explored how formal modeling can be used to verify and assure quality to smart contracts using Colored Petri Nets (CPN).
+Section~\ref{security} elaborates on the security requirements of a blockchain system.
+Section~\ref{conclusions} is a brief conclusion.
 
 \section{Formal Modeling Application}\label{formalModeling}
 Blockchain systems can be divided into five main layers~\cite{Duan2018}: Data layer, Consensus layer, Smart contract layer and Application layer. 
@@ -172,7 +175,7 @@ In~\cite{Duan2018}, the authors propose a hierarchical model focused on the cons
   The the block' structure definition can be seen on Listing~\ref{lst:block-code}.
   
   \begin{lstlisting}[frame=single,label={lst:block-code},
-    caption={Definition of a block's structure},captionpos=b, basicstyle=\ttfamily]
+    caption={Definition of a block's structure},captionpos=b, basicstyle=\ttfamily\small]
     newtype blockchain struct
       prehash integer;
       hash integer;
@@ -225,6 +228,16 @@ In~\cite{Duan2018}, the authors propose a hierarchical model focused on the cons
   and blocks. Process flowcharts can model the flow of information and input validation, making a process like
   node validations of blocks and its subprocess of synchronization and voting can clearly illustrated.
 
+  An example of a diagram that describes the system and a block can be seen on Figure~\ref{fig:system-block}.
+
+  \begin{figure}[h]
+    \centering
+    \includegraphics[width=\linewidth]{system-block-diagram}
+    \caption{System and block structure diagram, from~\cite{Duan2018}}
+    \Description{Ilustration of the layers that describe a blockchain system}
+    \label{fig:system-block}
+  \end{figure}
+  
 \section{Consensus Rule}\label{consensusRule}
 Blockchain system may choose to use consensus rules taken from popular protocols such as Bitcoin,
 but an alternative rule can be implemented, and also be formally modelled~\cite{Kawahara2020}.
@@ -252,7 +265,7 @@ and $s_i.v \in \mathbb{B}$ is the value of the result (correct or wrong).
 Using the threshold function previously shown, $T(m,s_1,... ,s_n) = (T.e,T.v)$. With this, let
 
 \begin{displaymath}
-  H_ = \left(\sum_{i}^{n} I(s_i.e \wedge (s_i.v = b)) \geq m \right)
+  H_b = \left(\sum_{i}^{n} I(s_i.e \wedge (s_i.v = b)) \geq m \right)
 \end{displaymath}
 
 Where:
@@ -340,7 +353,7 @@ application logic, implementation and operation. These requirements can be seen 
       \toprule
       Layer&Security Consideration& Standard \\
       \toprule
-      Operation & \makecell{Key Management, \\Audit, Backup} & ISO/IEC 27000 \\ 
+      Operation & \makecell{Key Management,\\Audit, Backup} & ISO/IEC 27000 \\ 
       \midrule
       Implementation & \makecell{Program Code,\\Secure Hardware} & ISO/IEC 15408 \\ 
       \midrule
@@ -360,6 +373,18 @@ In the implementation layer we have both software and hardware implementation pf
 protocols and key management mechanisms. In the Backbone protocol and application protocol deals with cryptographic protocols.
 The security of the source code of a smart contracts are also mention in~\cite{Matsuo2017}, which can be modeled and verified according to requirements,
 as shown in section~\ref{smartContracts}.
+
+\section{Conclusions}\label{conclusions}
+If we apply formal methods to Blockchain technology and its inherent structures and properties we can have a clear vision of the implementation
+of its design.
+
+The nodes of a blockchain system can be mathematically described in a way that we can predict its behavior.
+The same can be done for the state of the blockchain at a given moment. The same mathematical predictability
+can be applied to the description of endorsement policies. Smart contracts also benefit from formal verification,
+since their code can be an application used by common users, and CPN with tools like Space State Tools can provide
+a way of formally verifying the design of a contract.
+A blockchain system that was planned using formal methods benefit from assured security in the requirement layers
+that were considered.
 
 %%
 %% The next two lines define the bibliography style to be used, and
