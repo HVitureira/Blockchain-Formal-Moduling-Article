@@ -32,6 +32,8 @@
 %\settopmatter{printccs=true, printacmref=true}
 
 \usepackage{listings}
+\usepackage{makecell}
+\usepackage{tabularx}
 
 %%
 %% end of the preamble, start of the body of the document source.
@@ -41,7 +43,7 @@
 
 \author{Henoch Vitureira}
 \affiliation{%
-  \institution{Polytechnic Institute of Setubal}
+  \institution{Instituto Politécnico de Setúbal}
   \streetaddress{Campus do IPS - Estefanilha, 2910-761}
   \city{Setúbal}
   \country{Portugal}}
@@ -111,9 +113,16 @@ Formal methods can be introduced in order to provide unequivocal evidence that a
 Formal methods are a rigorous description of a system or process using mathematics that aims to provide evidence of its reliability and robustness, 
 according the specification in question~\cite{Regan2014}.
 
-//TODO FINISH
+Contrasting with normal testing, formal verification is performed during the design process, it ensure the design is correct and allows the verification
+of any situation, while regular testing cannot test for every possible input~\cite{Murray2019}.
 
-\section{Formal Modeling Application}
+This paper is organized as follows. Section \ref{formalModeling} introduces applications of formal modeling of blockchain technology.
+Section \ref{consensusRule} expands on the use of formal mathematical descriptions of a blockchain's consensus rule.
+Section \ref{smartContracts} explored how formal modeling can be used to verify and assure quality to smart contracts using Colored Petri Nets (CPN).
+Section \ref{security} elaborates on the security requirements of a blockchain system.
+Section \ref{conclusion} is a brief conclusion.
+
+\section{Formal Modeling Application}\label{formalModeling}
 Blockchain systems can be divided into five main layers~\cite{Duan2018}: Data layer, Consensus layer, Smart contract layer and Application layer. 
 As seen on Figure~\ref{fig:blockchain-layers}.
 
@@ -163,7 +172,7 @@ In~\cite{Duan2018}, the authors propose a hierarchical model focused on the cons
   The the block' structure definition can be seen on Listing~\ref{lst:block-code}.
   
   \begin{lstlisting}[frame=single,label={lst:block-code},
-    caption={Definition of a block's structure},captionpos=b]
+    caption={Definition of a block's structure},captionpos=b, basicstyle=\ttfamily]
     newtype blockchain struct
       prehash integer;
       hash integer;
@@ -212,11 +221,11 @@ In~\cite{Duan2018}, the authors propose a hierarchical model focused on the cons
   A consensus block stores the hash of the previous one and adds it to the end of the blockchain and completes the transfer of the blockchain state.
   
   \subsubsection{Diagrams}
-  With a modelling language like SDL, we can use diagrams to define blockchain structural entities, like the core system of the consensus layer
+  With a modeling language like SDL, we can use diagrams to define blockchain structural entities, like the core system of the consensus layer
   and blocks. Process flowcharts can model the flow of information and input validation, making a process like
   node validations of blocks and its subprocess of synchronization and voting can clearly illustrated.
 
-\section{Consensus Rule}
+\section{Consensus Rule}\label{consensusRule}
 Blockchain system may choose to use consensus rules taken from popular protocols such as Bitcoin,
 but an alternative rule can be implemented, and also be formally modelled~\cite{Kawahara2020}.
 
@@ -235,7 +244,7 @@ Where $T(2,\textrm{node}_1,\textrm{node}_2,\textrm{node}_3)$ would be an endorse
 that means "among the three nodes in the argument, at least two nodes must return the same execution result".
 With this, we can mathematically model faulty state verification.
 
-\subsection{Faulty states}
+\subsection{Faulty States}
 Let $\mathbb{B}$ and $\mathbb{N}$ be sets of Boolean and natural numbers, respectively. The state of the \textit{i}-th node can be defined as:
 $s_i = (s_i.e,s_i.v)$, where for each transaction execution, $s_i.e \in \mathbb{B}$ is the  existence of the result,
 and $s_i.v \in \mathbb{B}$ is the value of the result (correct or wrong).
@@ -249,7 +258,7 @@ Using the threshold function previously shown, $T(m,s_1,... ,s_n) = (T.e,T.v)$. 
 Where:
 
 \begin{enumerate}
-  \item[$\blacksquare$] \textit{m} is a treshold
+  \item[$\blacksquare$] \textit{m} is a threshold
   \item[$\blacksquare$] $b \in \mathbb{B}$
   \item[$\blacksquare$] $I : \mathbb{B} \mapsto \{0,1\}$  is the indicator function
 \end{enumerate}
@@ -258,403 +267,99 @@ Where:
 With the expression above, the author of~\cite{Kawahara2020} infers:
 
 \begin{displaymath}
-  T.e = H_{true} \vee H_{false},  T.v = \neg{H_{false}}
+  T.e = H_{\textrm{true}} \vee H_{\textrm{false}}, \quad T.v = \neg{H_{\textrm{false}}}
 \end{displaymath}
+\linebreak[1]
 
 The  endorsement policy $EP = (EP.e,EP.v)$ can be formed with \textit{T}. When $EP.e = \textrm{true}$, the policy
 is considered accordingly followed and the involved ledger is updated with the value of $EP.v$.
 
-\section{Template Overview}
-As noted in the introduction, the ``\verb|acmart|'' document class can
-be used to prepare many different kinds of documentation --- a
-double-blind initial submission of a full-length technical paper, a
-two-page SIGGRAPH Emerging Technologies abstract, a ``camera-ready''
-journal article, a SIGCHI Extended Abstract, and more --- all by
-selecting the appropriate {\itshape template style} and {\itshape
-    template parameters}.
+Mathematical descriptions like the ones above can also be applied to the fault tolerance of organizations participating in the blockchain in question.
+With formal modeling, a consensus rule can be tested and benchmarked after giving the test case some arbitrary requirements that are in conformity with the scope.
+The test results are used to judge the viability and scalability of the rule. 
 
-This document will explain the major features of the document
-class. For further information, the {\itshape \LaTeX\ User's Guide} is
-available from
-\url{https://www.acm.org/publications/proceedings-template}.
+\section{Smart Contracts}\label{smartContracts}
+Smart contracts are the backend code of decentralized applications that live in blockchains such as Ethereum. 
+This code cannot be changed once it is deployed to a production Net, so quality must be assured in order to guarantee
+that specifications are followed and that vulnerabilities are inexistent~\cite{Murray2019}.
+With the logic and mathematical modeling of formal verification, we avoid edge test cases that involve unforeseen inputs or conditions.
 
-\subsection{Template Styles}
+A smart contract's execution after its required verifications originates a transfer on a blockchain. Ethereum is a blockchain system
+that allows is to deploy decentralized applications based on smart contracts, which are written in Solidity~\cite{Murray2019}.
+Solidity has a limitation that makes smart contracts have a no parameters, no return value \textit{function()} that is anonymous
+and defined as the fallback function~\cite{Liu2019}. When a contract sends Ether (the Ethereum blockchain token) but does not
+not call any function, the fallback function is called. If this function does not exist int he contract, the transaction is cancelled.
+This limitation can be used by hackers to exploit the contract, like the DAO smart contract exploit in 2016~\cite{Liu2019}.
 
-The primary parameter given to the ``\verb|acmart|'' document class is
-the {\itshape template style} which corresponds to the kind of publication
-or SIG publishing the work. This parameter is enclosed in square
-brackets and is a part of the {\verb|documentclass|} command:
-\begin{verbatim}
-  \documentclass[STYLE]{acmart}
-\end{verbatim}
-
-Journals use one of three template styles. All but three ACM journals
-use the {\verb|acmsmall|} template style:
-\begin{itemize}
-  \item {\verb|acmsmall|}: The default journal template style.
-  \item {\verb|acmlarge|}: Used by JOCCH and TAP.
-  \item {\verb|acmtog|}: Used by TOG.
-\end{itemize}
-
-The majority of conference proceedings documentation will use the {\verb|acmconf|} template style.
-\begin{itemize}
-  \item {\verb|acmconf|}: The default proceedings template style.
-        \item{\verb|sigchi|}: Used for SIGCHI conference articles.
-        \item{\verb|sigchi-a|}: Used for SIGCHI ``Extended Abstract'' articles.
-        \item{\verb|sigplan|}: Used for SIGPLAN conference articles.
-\end{itemize}
-
-\subsection{Template Parameters}
-
-In addition to specifying the {\itshape template style} to be used in
-formatting your work, there are a number of {\itshape template parameters}
-which modify some part of the applied template style. A complete list
-of these parameters can be found in the {\itshape \LaTeX\ User's Guide.}
-
-Frequently-used parameters, or combinations of parameters, include:
-\begin{itemize}
-  \item {\verb|anonymous,review|}: Suitable for a ``double-blind''
-        conference submission. Anonymizes the work and includes line
-        numbers. Use with the \verb|\acmSubmissionID| command to print the
-        submission's unique ID on each page of the work.
-        \item{\verb|authorversion|}: Produces a version of the work suitable
-        for posting by the author.
-        \item{\verb|screen|}: Produces colored hyperlinks.
-\end{itemize}
-
-This document uses the following string as the first command in the
-source file:
-\begin{verbatim}
-\documentclass[sigconf]{acmart}
-\end{verbatim}
-
-\section{Modifications}
-
-Modifying the template --- including but not limited to: adjusting
-margins, typeface sizes, line spacing, paragraph and list definitions,
-and the use of the \verb|\vspace| command to manually adjust the
-vertical spacing between elements of your work --- is not allowed.
-
-  {\bfseries Your document will be returned to you for revision if
-    modifications are discovered.}
-
-\section{Typefaces}
-
-The ``\verb|acmart|'' document class requires the use of the
-``Libertine'' typeface family. Your \TeX\ installation should include
-this set of packages. Please do not substitute other typefaces. The
-``\verb|lmodern|'' and ``\verb|ltimes|'' packages should not be used,
-as they will override the built-in typeface families.
-
-\section{Title Information}
-
-The title of your work should use capital letters appropriately -
-\url{https://capitalizemytitle.com/} has useful rules for
-capitalization. Use the {\verb|title|} command to define the title of
-your work. If your work has a subtitle, define it with the
-  {\verb|subtitle|} command.  Do not insert line breaks in your title.
-
-If your title is lengthy, you must define a short version to be used
-in the page headers, to prevent overlapping text. The \verb|title|
-command has a ``short title'' parameter:
-\begin{verbatim}
-  \title[short title]{full title}
-\end{verbatim}
-
-\section{Authors and Affiliations}
-
-Each author must be defined separately for accurate metadata
-identification. Multiple authors may share one affiliation. Authors'
-names should not be abbreviated; use full first names wherever
-possible. Include authors' e-mail addresses whenever possible.
-
-Grouping authors' names or e-mail addresses, or providing an ``e-mail
-alias,'' as shown below, is not acceptable:
-\begin{verbatim}
-  \author{Brooke Aster, David Mehldau}
-  \email{dave,judy,steve@university.edu}
-  \email{firstname.lastname@phillips.org}
-\end{verbatim}
-
-The \verb|authornote| and \verb|authornotemark| commands allow a note
-to apply to multiple authors --- for example, if the first two authors
-of an article contributed equally to the work.
-
-If your author list is lengthy, you must define a shortened version of
-the list of authors to be used in the page headers, to prevent
-overlapping text. The following command should be placed just after
-the last \verb|\author{}| definition:
-\begin{verbatim}
-  \renewcommand{\shortauthors}{McCartney, et al.}
-\end{verbatim}
-Omitting this command will force the use of a concatenated list of all
-of the authors' names, which may result in overlapping text in the
-page headers.
-
-The article template's documentation, available at
-\url{https://www.acm.org/publications/proceedings-template}, has a
-complete explanation of these commands and tips for their effective
-use.
-
-Note that authors' addresses are mandatory for journal articles.
-
-\section{Rights Information}
-
-Authors of any work published by ACM will need to complete a rights
-form. Depending on the kind of work, and the rights management choice
-made by the author, this may be copyright transfer, permission,
-license, or an OA (open access) agreement.
-
-Regardless of the rights management choice, the author will receive a
-copy of the completed rights form once it has been submitted. This
-form contains \LaTeX\ commands that must be copied into the source
-document. When the document source is compiled, these commands and
-their parameters add formatted text to several areas of the final
-document:
-\begin{itemize}
-  \item the ``ACM Reference Format'' text on the first page.
-  \item the ``rights management'' text on the first page.
-  \item the conference information in the page header(s).
-\end{itemize}
-
-Rights information is unique to the work; if you are preparing several
-works for an event, make sure to use the correct set of commands with
-each of the works.
-
-The ACM Reference Format text is required for all articles over one
-page in length, and is optional for one-page articles (abstracts).
-
-\section{CCS Concepts and User-Defined Keywords}
-
-Two elements of the ``acmart'' document class provide powerful
-taxonomic tools for you to help readers find your work in an online
-search.
-
-The ACM Computing Classification System ---
-\url{https://www.acm.org/publications/class-2012} --- is a set of
-classifiers and concepts that describe the computing
-discipline. Authors can select entries from this classification
-system, via \url{https://dl.acm.org/ccs/ccs.cfm}, and generate the
-commands to be included in the \LaTeX\ source.
-
-User-defined keywords are a comma-separated list of words and phrases
-of the authors' choosing, providing a more flexible way of describing
-the research being presented.
-
-CCS concepts and user-defined keywords are required for for all
-articles over two pages in length, and are optional for one- and
-two-page articles (or abstracts).
-
-\section{Sectioning Commands}
-
-Your work should use standard \LaTeX\ sectioning commands:
-\verb|section|, \verb|subsection|, \verb|subsubsection|, and
-\verb|paragraph|. They should be numbered; do not remove the numbering
-from the commands.
-
-Simulating a sectioning command by setting the first word or words of
-a paragraph in boldface or italicized text is {\bfseries not allowed.}
-
-\section{Tables}
-
-The ``\verb|acmart|'' document class includes the ``\verb|booktabs|''
-package --- \url{https://ctan.org/pkg/booktabs} --- for preparing
-high-quality tables.
-
-Table captions are placed {\itshape above} the table.
-
-Because tables cannot be split across pages, the best placement for
-them is typically the top of the page nearest their initial cite.  To
-ensure this proper ``floating'' placement of tables, use the
-environment \textbf{table} to enclose the table's contents and the
-table caption.  The contents of the table itself must go in the
-\textbf{tabular} environment, to be aligned properly in rows and
-columns, with the desired horizontal and vertical rules.  Again,
-detailed instructions on \textbf{tabular} material are found in the
-\textit{\LaTeX\ User's Guide}.
-
-Immediately following this sentence is the point at which
-Table~\ref{tab:freq} is included in the input file; compare the
-placement of the table here with the table in the printed output of
-this document.
-
-\begin{table}
-  \caption{Frequency of Special Characters}
-  \label{tab:freq}
-  \begin{tabular}{ccl}
-    \toprule
-    Non-English or Math & Frequency   & Comments          \\
-    \midrule
-    \O                  & 1 in 1,000  & For Swedish names \\
-    $\pi$               & 1 in 5      & Common in math    \\
-    \$                  & 4 in 5      & Used in business  \\
-    $\Psi^2_1$          & 1 in 40,000 & Unexplained usage \\
-    \bottomrule
-  \end{tabular}
-\end{table}
-
-To set a wider table, which takes up the whole width of the page's
-live area, use the environment \textbf{table*} to enclose the table's
-contents and the table caption.  As with a single-column table, this
-wide table will ``float'' to a location deemed more
-desirable. Immediately following this sentence is the point at which
-Table~\ref{tab:commands} is included in the input file; again, it is
-instructive to compare the placement of the table here with the table
-in the printed output of this document.
-
-\begin{table*}
-  \caption{Some Typical Commands}
-  \label{tab:commands}
-  \begin{tabular}{ccl}
-    \toprule
-    Command                    & A Number & Comments         \\
-    \midrule
-    \texttt{{\char'134}author} & 100      & Author           \\
-    \texttt{{\char'134}table}  & 300      & For tables       \\
-    \texttt{{\char'134}table*} & 400      & For wider tables \\
-    \bottomrule
-  \end{tabular}
-\end{table*}
-
-Always use midrule to separate table header rows from data rows, and
-use it only for this purpose. This enables assistive technologies to
-recognise table headers and support their users in navigating tables
-more easily.
-
-\section{Math Equations}
-You may want to display math equations in three distinct styles:
-inline, numbered or non-numbered display.  Each of the three are
-discussed in the next sections.
-
-\subsection{Inline (In-text) Equations}
-A formula that appears in the running text is called an inline or
-in-text formula.  It is produced by the \textbf{math} environment,
-which can be invoked with the usual
-\texttt{{\char'134}begin\,\ldots{\char'134}end} construction or with
-the short form \texttt{\$\,\ldots\$}. You can use any of the symbols
-and structures, from $\alpha$ to $\omega$, available in
-\LaTeX~\cite{Lamport:LaTeX}; this section will simply show a few
-examples of in-text equations in context. Notice how this equation:
-\begin{math}
-  \lim_{n\rightarrow \infty}x=0
-\end{math},
-set here in in-line math style, looks slightly different when
-set in display style.  (See next section).
-
-\subsection{Display Equations}
-A numbered display equation---one set off by vertical space from the
-text and centered horizontally---is produced by the \textbf{equation}
-environment. An unnumbered display equation is produced by the
-\textbf{displaymath} environment.
-
-Again, in either environment, you can use any of the symbols and
-structures available in \LaTeX\@; this section will just give a couple
-of examples of display equations in context.  First, consider the
-equation, shown as an inline equation above:
-\begin{equation}
-  \lim_{n\rightarrow \infty}x=0
-\end{equation}
-Notice how it is formatted somewhat differently in
-the \textbf{displaymath}
-environment.  Now, we'll enter an unnumbered equation:
-\begin{displaymath}
-  \sum_{i=0}^{\infty} x + 1
-\end{displaymath}
-and follow it with another numbered equation:
-\begin{equation}
-  \sum_{i=0}^{\infty}x_i=\int_{0}^{\pi+2} f
-\end{equation}
-just to demonstrate \LaTeX's able handling of numbering.
-
-\section{Figures}
-
-The ``\verb|figure|'' environment should be used for figures. One or
-more images can be placed within a figure. If your figure contains
-third-party material, you must clearly identify it as such, as shown
-in the example below.
+A formal verification method using CPN modeling is proposed in~\cite{Liu2019}. In a scenario where a crowd funding smart contract (CFD) is considered, \cite{Liu2019} proposes a two layers contract modeling, 
+the CFD layer model that establishes the overall structure of the contract, and a bottom layer that contains the AddTo layer
+and the WithDraw layer, which implement deposit and withdrawing functions.
 \begin{figure}[h]
   \centering
-  \includegraphics[width=\linewidth]{sample-franklin}
-  \caption{1907 Franklin Model D roadster. Photograph by Harris \&
-    Ewing, Inc. [Public domain], via Wikimedia
-    Commons. (\url{https://goo.gl/VLCRBB}).}
-  \Description{A woman and a girl in white dresses sit in an open car.}
+  \includegraphics[width=\linewidth]{cfd-layer}
+  \caption{CFD Layer, from \cite{Liu2019}}
+  \Description{Ilustration of the layers that describe a blockchain system}
+  \label{fig:cfd-layer}
 \end{figure}
 
-Your figures should contain a caption which describes the figure to
-the reader.
+The CFD layer, shown on Figure~\ref{fig:cfd-layer}, presents the entity Account, that represents the user, Bank that represent
+the contract account, and Withdraw and AddTo, that represent withdrawing and depositing operations.
 
-Figure captions are placed {\itshape below} the figure.
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=\linewidth]{add-to-layer}
+  \caption{AddTo Layer, from \cite{Liu2019}}
+  \Description{Ilustration of the layers that describe a blockchain system}
+  \label{fig:add-to-layer}
+\end{figure}
 
-Every figure should also have a figure description unless it is purely
-decorative. These descriptions convey what’s in the image to someone
-who cannot see it. They are also used by search engine crawlers for
-indexing images, and when images cannot be loaded.
+The AddTo layer, shown on Figure~\ref{fig:add-to-layer}, models the user's depositing operations, where there are 
+3 transactions and 8 entities in the model that describe the steps of a given transaction in the blockchain and it's conditions.
 
-A figure description must be unformatted plain text less than 2000
-characters long (including spaces).  {\bfseries Figure descriptions
-    should not repeat the figure caption – their purpose is to capture
-    important information that is not already provided in the caption or
-    the main text of the paper.} For figures that convey important and
-complex new information, a short text description may not be
-adequate. More complex alternative descriptions can be placed in an
-appendix and referenced in a short figure description. For example,
-provide a data table capturing the information in a bar chart, or a
-structured list representing a graph.  For additional information
-regarding how best to write figure descriptions and why doing this is
-so important, please see
-\url{https://www.acm.org/publications/taps/describing-figures/}.
+A similar to the on seen on Figure~\ref{fig:add-to-layer} was also presented in~\cite{Liu2019} for the WithDraw layer to describe the inherent processes
+of withdraw operations and all their conditions.
 
-\subsection{The ``Teaser Figure''}
+Models like the proposed CPN model can be tested for resilience against malicious behavior using another model that attempts to exploit
+the CFD contract. We can plan our attack model to test any operation and condition, such as balance altering, assurance of reception of funds,
+etc. Smart contract's vulnerabilities can be taken advantage of by regular users executing expected operations, not only by badly intended actors 
+with knowledge in computer science,~so it makes sense that scenarios of no attack can also be part of the model checking. 
+CPN tools like Space State Tools can used to see the status of each step of a contract's execution during a test scenario~\cite{Liu2019},
+easing the discovert of vulnerabilities.
 
-A ``teaser figure'' is an image, or set of images in one figure, that
-are placed after all author and affiliation information, and before
-the body of the article, spanning the page. If you wish to have such a
-figure in your article, place the command immediately before the
-\verb|\maketitle| command:
-\begin{verbatim}
-  \begin{teaserfigure}
-    \includegraphics[width=\textwidth]{sampleteaser}
-    \caption{figure caption}
-    \Description{figure description}
-  \end{teaserfigure}
-\end{verbatim}
+\section{Security}\label{security}
+As mentioned in section~\ref{formalModeling}, formal analysis and verification is used to assure security of a blockchain's core structures and consensus rule.
+But we can cover the security-requirements for backend blockchain protocol and mechanisms to ensure the assumptions and scripting language~\cite{Matsuo2017}.
 
-\section{Citations and Bibliographies}
+In~\cite{Matsuo2017}, the authors enumerate security requirements of a blockchain system by their layers, consisting of cryptography layer, backbone protocol, application protocol,
+application logic, implementation and operation. These requirements can be seen in Table~\ref{tab:security-layers}.
 
-The use of \BibTeX\ for the preparation and formatting of one's
-references is strongly recommended. Authors' names should be complete
---- use full first names (``Donald E. Knuth'') not initials
-(``D. E. Knuth'') --- and the salient identifying features of a
-reference should be included: title, year, volume, number, pages,
-article DOI, etc.
+  \begin{table}
+    \caption{Blockchain Technology layers and security considerations}
+    \label{tab:security-layers}
+    \begin{tabularx}{\linewidth}{ccl}
+      \toprule
+      Layer&Security Consideration& Standard \\
+      \toprule
+      Operation & \makecell{Key Management, \\Audit, Backup} & ISO/IEC 27000 \\ 
+      \midrule
+      Implementation & \makecell{Program Code,\\Secure Hardware} & ISO/IEC 15408 \\ 
+      \midrule
+      Application Logic & \makecell{Scripting Language\\for Financial\\Transaction,\\ Contract} & \makecell{Secure coding\\guides} \\ 
+      \midrule
+      Application Protocol & \makecell{Privacy protection,\\Secure transaction} & ISO/IEC 29128 \\ 
+      \midrule
+      Backbone Protocol & \makecell{PSP, Consensus,\\Merkle Tree} & ISO/IEC 29128 \\ 
+      \midrule
+      Cryptography & \makecell{ECDSA, SHA-2,\\RIPEMD160} & NIST, ISO \\
+      \bottomrule
+  \end{tabularx}
+  \end{table}
 
-The bibliography is included in your source document with these two
-commands, placed just before the \verb|\end{document}| command:
-\begin{verbatim}
-  \bibliographystyle{ACM-Reference-Format}
-  \bibliography{bibfile}
-\end{verbatim}
-where ``\verb|bibfile|'' is the name, without the ``\verb|.bib|''
-suffix, of the \BibTeX\ file.
-
-Citations and references are numbered by default. A small number of
-ACM publications have citations and references formatted in the
-``author year'' style; for these exceptions, please include this
-command in the {\bfseries preamble} (before the command
-``\verb|\begin{document}|'') of your \LaTeX\ source:
-\begin{verbatim}
-  \citestyle{acmauthoryear}
-\end{verbatim}
-
-Some examples.  A paginated journal article \cite{Afzaal2021}, an
-enumerated journal article \cite{Murray2019}, a reference to an entire
-issue \cite{Matsuo2017}, a monograph (whole book) \cite{Duan2018}, a
-monograph/whole book in a series (see 2a in spec. document)
-\cite{Kawahara2020}, a divisible-book such as an anthology or compilation
-\cite{Liu2019} followed by the same example, however we only output
-the series if the volume number is given.
-
+We can implement formal methods in the layers Implementation, Backbone protocol, Application protocol and Language for Smart Contract.
+In the implementation layer we have both software and hardware implementation pf security mechanisms, including the cryptographic algorithm,
+protocols and key management mechanisms. In the Backbone protocol and application protocol deals with cryptographic protocols.
+The security of the source code of a smart contracts are also mention in~\cite{Matsuo2017}, which can be modeled and verified according to requirements,
+as shown in section~\ref{smartContracts}.
 
 %%
 %% The next two lines define the bibliography style to be used, and
@@ -662,39 +367,6 @@ the series if the volume number is given.
 \bibliographystyle{ACM-Reference-Format}
 \bibliography{article-base}
 
-%%
-%% If your work has an appendix, this is the place to put it.
-\appendix
-
-\section{Research Methods}
-
-\subsection{Part One}
-
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi
-malesuada, quam in pulvinar varius, metus nunc fermentum urna, id
-sollicitudin purus odio sit amet enim. Aliquam ullamcorper eu ipsum
-vel mollis. Curabitur quis dictum nisl. Phasellus vel semper risus, et
-lacinia dolor. Integer ultricies commodo sem nec semper.
-
-\subsection{Part Two}
-
-Etiam commodo feugiat nisl pulvinar pellentesque. Etiam auctor sodales
-ligula, non varius nibh pulvinar semper. Suspendisse nec lectus non
-ipsum convallis congue hendrerit vitae sapien. Donec at laoreet
-eros. Vivamus non purus placerat, scelerisque diam eu, cursus
-ante. Etiam aliquam tortor auctor efficitur mattis.
-
-\section{Online Resources}
-
-Nam id fermentum dui. Suspendisse sagittis tortor a nulla mollis, in
-pulvinar ex pretium. Sed interdum orci quis metus euismod, et sagittis
-enim maximus. Vestibulum gravida massa ut felis suscipit
-congue. Quisque mattis elit a risus ultrices commodo venenatis eget
-dui. Etiam sagittis eleifend elementum.
-
-Nam interdum magna at lectus dignissim, ac dignissim lorem
-rhoncus. Maecenas eu arcu ac neque placerat aliquam. Nunc pulvinar
-massa et mattis lacinia.
 
 \end{document}
 \endinput
